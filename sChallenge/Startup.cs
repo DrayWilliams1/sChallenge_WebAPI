@@ -18,11 +18,25 @@ namespace sChallenge
 
         public IConfiguration Configuration { get; }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("ApiDatabase")); // naming the InMemory database ApiDatabase
             services.AddControllers().AddNewtonsoftJson(); // possible additional support for JSON operations
+
+            // Controls what domains can access via CORS
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy(name: MyAllowSpecificOrigins, builder =>
+                {
+                    builder.WithOrigins("http://localhost:8100") // Specifically allows the web client app to interact with no CORS issues
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +50,8 @@ namespace sChallenge
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins); // must be placed after UseRouting but before UseAuthorization
 
             app.UseAuthorization();
 
