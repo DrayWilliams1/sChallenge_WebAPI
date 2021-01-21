@@ -32,6 +32,7 @@ namespace sChallenge.Controllers
             City = patient.City,
             Province = patient.Province,
             Country = patient.Country,
+            Postal_Code = patient.Postal_Code,
             HasCovid = patient.HasCovid,
             Phone = patient.Phone,
             Email = patient.Email,
@@ -45,6 +46,13 @@ namespace sChallenge.Controllers
         public async Task<ActionResult<IEnumerable<PatientDTO>>> GetPatient()
         {
             return await _context.Patient.Select(patient => PatientToDTO(patient)).ToListAsync();
+        }
+
+        // GET: api/Patients/count
+        [HttpGet("count")]
+        public int GetPatientCount()
+        {
+            return _context.Patient.Select(p => p.Id).Count();
         }
 
         // GET: api/Patients/5
@@ -85,6 +93,7 @@ namespace sChallenge.Controllers
             patient.City = patientDTO.City;
             patient.Province = patientDTO.Province;
             patient.Country = patientDTO.Country;
+            patient.Postal_Code = patientDTO.Postal_Code;
             patient.HasCovid = patientDTO.HasCovid;
             patient.Phone = patientDTO.Phone;
             patient.Email = patientDTO.Email;
@@ -128,6 +137,7 @@ namespace sChallenge.Controllers
                 City = patientDTO.City,
                 Province = patientDTO.Province,
                 Country = patientDTO.Country,
+                Postal_Code = patientDTO.Postal_Code,
                 HasCovid = patientDTO.HasCovid,
                 Phone = patientDTO.Phone,
                 Email = patientDTO.Email,
