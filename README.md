@@ -1,5 +1,5 @@
 # sChallenge_WebAPI
-An .NET Core Web API demonstration.
+A .NET Core Web API demonstration.
 ## Summary
 A back-end web API created in C# using .NET Core and EF Core. The data is stored in an InMemory database for ease of deployment on tester's machines (no local database setup required). The database stores/facilitates operations around database user's (those who will sign into the applications) and patients (those who will have health details logged). The database is initialized with a few entities of each type to ensure testing can begin out-of-the-box.
 
